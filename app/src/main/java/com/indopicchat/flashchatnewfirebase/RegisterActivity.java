@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mConfirmPasswordView;
 
     // Firebase instance variables
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
 
 
@@ -138,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("Flashchat","success: "+ task.isSuccessful());
                 if (!task.isSuccessful()) {
                     Log.d("Flashchat","registration attempt failed");
-                    Toast.makeText(RegisterActivity.this,"Authentication failed",Toast.LENGTH_SHORT).show();
+                    showErrorDialog("Registration attempt failed.");
                 }else {
                     saveDisplayName();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -160,6 +161,16 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     // TODO: Create an alert dialog to show in case registration failed
+
+    private void showErrorDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle("Oops")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
+    }
 
 
 
